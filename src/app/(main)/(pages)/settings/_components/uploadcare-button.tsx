@@ -5,7 +5,7 @@ import "@uploadcare/react-uploader/core.css";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  onUpload: (cdnUrl: string) => any;
+  onUpload: (e: string) => any;
 };
 
 const UploadCareButton = ({ onUpload }: Props) => {
@@ -14,11 +14,10 @@ const UploadCareButton = ({ onUpload }: Props) => {
   return (
     <div>
       <FileUploaderRegular
-        pubkey="a9428ff5ff90ae7a64eb"
+        pubkey={process.env.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY!} // ✅ now works
         sourceList="local, camera, facebook, gdrive"
         classNameUploader="uc-light"
         onChange={async (output) => {
-          // Uploaded files live in output.successEntries
           if (output.successEntries.length > 0) {
             const cdnUrl = output.successEntries[0].cdnUrl;
             const file = await onUpload(cdnUrl);
