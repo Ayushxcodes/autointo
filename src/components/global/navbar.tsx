@@ -1,4 +1,5 @@
 import { UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +7,7 @@ import React from "react";
 
 
 type Props = {};
+const user = await currentUser()
 
 const Navbar = async (props: Props) => {
   return (
@@ -54,9 +56,7 @@ const Navbar = async (props: Props) => {
             true ? 'Dashboard' : 'Get Started'}
           </span>
         </Link>
-        {
-            //wire up User
-        }
+        {user ? <UserButton afterSignOutUrl="/" /> : null}
         <MenuIcon className="md:hidden" />
         </aside>
     </header>
